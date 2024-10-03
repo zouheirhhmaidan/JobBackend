@@ -3,17 +3,16 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-
+const http = require("http").createServer(app);
+const router = express.Router();
 const bodyParser = require("body-parser");
 
 app.use(cors());
 app.use(bodyParser.json());
 
+require("./Routes/JobsRoute")(router);
+app.use("/api", router);
 
-const routes = require("./Routes/routes");
-app.use("/api", routes);
-
-
-app.listen(process.env.PORT, (req, res) => {
-  console.log("Connected to database on " + process.env.PORT);
+http.listen(process.env.PORT, (req, res) => {
+  console.log("Connected to server on PORT: " + process.env.PORT);
 });

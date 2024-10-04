@@ -85,7 +85,11 @@ const getImage = async (id) => {
       writeJobsToFile(jobs);
     }
   } catch (err) {
-    console.log(err);
+    let jobs = readJobsFromFile();
+    let index = jobs.findIndex((job) => job.id === id);
+    jobs[index]["image"] = "";
+    jobs[index]["status"] = "Error";
+    writeJobsToFile(jobs);
   }
 };
 
